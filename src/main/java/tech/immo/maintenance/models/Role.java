@@ -1,15 +1,19 @@
-package tech.immo.maintenance.model;
+package tech.immo.maintenance.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name="role")
 public class Role implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Integer id;
     private String roleName;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private User user;
 
     public Role() {
 
