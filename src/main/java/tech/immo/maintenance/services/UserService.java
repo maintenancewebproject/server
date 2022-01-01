@@ -14,15 +14,17 @@ public class UserService {
     private final UserRepo userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    //private AuthenticationManager authenticationManager;
 
 
     public UserService(UserRepo userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        //this.authenticationManager = authenticationManager;
     }
 
     public void deleteUser(int id) {
-        userRepository.deleteUserById(id);
+        userRepository.deleteById(id);
     }
 
 
@@ -36,8 +38,7 @@ public class UserService {
     }
 
     public User findUserById(int id) {
-        return userRepository.findUserById(id)
-                .orElseThrow(() -> new UserNotFoundException("l'utilisateur " + id + "n'a pas été trouvé"));
+        return userRepository.findUserById(id).orElseThrow(() -> new UserNotFoundException("l'utilisateur n'a pas été trouvé"));
     }
 
     public User findUserByEmail(String email) {
@@ -45,8 +46,15 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("l'utilisateur n'a pas été trouvé"));
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public User updateUser(User userData) {
+        User user = this.findUserById(userData.getId());
+        user.setEmail(userData.getEmail());
+        user.setRole(userData.getRole());
+        user.setFirstName(userData.getFirstName());
+        user.setLastName(userData.getLastName());
+       // userRepository.deleteById(userData.getId());
+        userRepository.save(user);
+        return user;
     }
 
     public User doLogin(String password, String email) {
@@ -62,6 +70,8 @@ public class UserService {
             return null;
         }
     }
+
+
 
 
 }

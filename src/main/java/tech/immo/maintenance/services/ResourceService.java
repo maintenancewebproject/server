@@ -34,7 +34,16 @@ public class ResourceService {
                 .orElseThrow(() -> new ResourceNotFoundException("la ressource " + id + "n'a pas été trouvée"));
     }
 
-    public Resource updateResource(Resource resource) {
-        return resourceRepository.save(resource);
+    public Resource updateResource(Resource resourceData) {
+        Resource resource = this.findResourceById(resourceData.getId());
+        resource.setLocalisation(resourceData.getLocalisation());
+        resource.setDescription(resourceData.getDescription());
+        //resourceRepository.deleteById(resourceData.getId());
+        resourceRepository.save(resource);
+        return resource;
+    }
+
+    public List<Resource> findAllResourcesByUserId(User user) {
+         return resourceRepository.findAllResourcesByUserId(user.getId());
     }
 }

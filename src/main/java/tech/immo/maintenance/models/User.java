@@ -11,7 +11,7 @@ import java.util.List;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false,name = "user_id")
+    @Column(nullable = false, updatable = false, name="user_id")
     private int id;
     private String firstName;
     private String lastName;
@@ -20,28 +20,54 @@ public class User implements Serializable {
     private List<Resource> resource;
     @Column(unique = true)
     private String email;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Role role;
+   // @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private int role;
+    @OneToMany(mappedBy = "user")
+    private List<Anomalie> anomalie;
 
     public User() {}
 
-    public User(String firstName, String lastName, String passWord, List<Resource> resource, String email, Role role) {
+    public User(String firstName, List<Anomalie> anomalie, String lastName, String passWord, List<Resource> resource, String email, int role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.passWord = passWord;
         this.resource = resource;
         this.email = email;
         this.role = role;
+        this.anomalie = anomalie;
 
     }
 
-    public User(String firstName, String lastName, String passWord, String email, Role role) {
+    public User(String firstName,List<Anomalie> anomalie, String lastName, String passWord, String email, int role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.passWord = passWord;
         this.resource = new ArrayList<Resource>();
         this.email = email;
         this.role = role;
+        this.anomalie = anomalie;
+
+    }
+
+    public User(String firstName, String lastName, String passWord, List<Resource> resource, String email, int role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passWord = passWord;
+        this.resource = resource;
+        this.email = email;
+        this.role = role;
+        this.anomalie = new ArrayList<Anomalie>();
+
+    }
+
+    public User(String firstName, String lastName, String passWord, String email, int role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passWord = passWord;
+        this.resource = new ArrayList<Resource>();
+        this.email = email;
+        this.role = role;
+        this.anomalie = new ArrayList<Anomalie>();
 
     }
 
@@ -59,6 +85,14 @@ public class User implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public List<Anomalie> getAnomalie() {
+        return anomalie;
+    }
+
+    public void setAnomalie(Anomalie anomalie) {
+        this.anomalie.add(anomalie);
     }
 
     public String getLastName() {
@@ -85,11 +119,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Role getRole() {
+    public int getRole() {
         return this.role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
@@ -107,7 +141,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", name='" + lastName + firstName + '\'' +
                 ", email ='" + email + '\'' +
-                ", role ='" + role.getRoleName() + '\'' +
+                ", role ='" + role+ '\'' +
                 '}';
     }
 

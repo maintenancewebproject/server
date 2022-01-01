@@ -15,4 +15,6 @@ public interface ResourceRepo extends JpaRepository<Resource, Integer> {
     List<Resource> findAllByUser(User user);
 
     Optional<Resource> findResourceById(int id);
+
+    List<Resource> findAllResourcesByUserId(int id);
 }

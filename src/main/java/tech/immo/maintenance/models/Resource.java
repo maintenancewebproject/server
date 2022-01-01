@@ -1,7 +1,10 @@
 package tech.immo.maintenance.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,13 +16,15 @@ public class Resource implements Serializable {
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
     private String localisation;
     @OneToMany(mappedBy = "resource")
     private List<Anomalie> anomalies;
     private String description;
 
-
+    public Resource() {
+    }
     public Resource(int id, User user, String localisation, List<Anomalie> anomalies, String description) {
         this.id = id;
         this.user = user;
@@ -32,6 +37,7 @@ public class Resource implements Serializable {
         this.id = id;
         this.user = user;
         this.localisation = localisation;
+        this.anomalies = new ArrayList<Anomalie>();
         this.description = description;
     }
 

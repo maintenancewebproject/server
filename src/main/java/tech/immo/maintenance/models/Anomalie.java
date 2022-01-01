@@ -1,5 +1,7 @@
 package tech.immo.maintenance.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,9 +14,14 @@ public class Anomalie {
     private int id;
     @ManyToOne
     @JoinColumn(name = "resource_id")
+    @JsonIgnore
     private Resource resource;
     private String description;
     private boolean isTreated;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
 
     public Anomalie(int id, Resource resource, String description, boolean isTreated) {
@@ -22,6 +29,15 @@ public class Anomalie {
         this.resource = resource;
         this.description = description;
         this.isTreated = isTreated;
+        this.user = null;
+    }
+
+    public Anomalie(int id, Resource resource, String description,User user, boolean isTreated) {
+        this.id = id;
+        this.resource = resource;
+        this.description = description;
+        this.isTreated = isTreated;
+        this.user = user;
     }
 
     public int getId() {
@@ -30,6 +46,14 @@ public class Anomalie {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Resource getResource() {
@@ -47,4 +71,13 @@ public class Anomalie {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean isTreated() {
+        return isTreated;
+    }
+
+    public void setTreated(boolean treated) {
+        isTreated = treated;
+    }
+
 }
