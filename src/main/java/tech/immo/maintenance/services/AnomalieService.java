@@ -30,6 +30,12 @@ public class AnomalieService {
 
     }
 
+    public Anomalie updateAnomalie(int id, boolean treated) {
+        Anomalie anomalie = this.findAnomalieById(id);
+        anomalie.setTreated(treated);
+        return anomalieRepository.save(anomalie);
+    }
+
     public List<Anomalie> findAllAnomaliesByResource(Resource resource) {
         return anomalieRepository.findAllAnomaliesByResource(resource);
     }

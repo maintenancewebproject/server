@@ -3,10 +3,11 @@ package tech.immo.maintenance.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="anomalie")
-public class Anomalie {
+public class Anomalie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,17 @@ public class Anomalie {
     @JsonIgnore
     private User user;
 
+    public Anomalie() {
+
+    }
+
+    public Anomalie(int id, Resource resource, String description, boolean isTreated, User user) {
+        this.id = id;
+        this.resource = resource;
+        this.description = description;
+        this.isTreated = isTreated;
+        this.user = user;
+    }
 
     public Anomalie(int id, Resource resource, String description, boolean isTreated) {
         this.id = id;

@@ -10,11 +10,11 @@ import java.util.Optional;
 @Repository
 public interface ResourceRepo extends JpaRepository<Resource, Integer> {
 
-    void deleteUserById(int id);
-
     List<Resource> findAllByUser(User user);
 
     Optional<Resource> findResourceById(int id);
 
     List<Resource> findAllResourcesByUserId(int id);
+
+    void deleteResourceById(int id);
 }

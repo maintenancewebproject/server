@@ -25,6 +25,7 @@ public class Resource implements Serializable {
 
     public Resource() {
     }
+
     public Resource(int id, User user, String localisation, List<Anomalie> anomalies, String description) {
         this.id = id;
         this.user = user;

@@ -16,7 +16,7 @@ public class ResourceService {
     }
 
     public void deleteResource(int id) {
-        resourceRepository.deleteUserById(id);
+        resourceRepository.deleteById(id);
     }
 
 
